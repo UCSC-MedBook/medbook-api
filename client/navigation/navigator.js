@@ -1,6 +1,7 @@
-
 Meteor.startup(function() {
     if (Meteor.isClient) {
+            console.log("Registering MedBookNavigator");
+
             UI.registerHelper("MedBookNavigator", function () {
                     return Template.MedBookNavigator;
             });
@@ -15,15 +16,16 @@ Meteor.startup(function() {
                 $('.navigation li').removeClass('small-padding');
             },
             'mouseover .MedBookLink': function (e) {
-                    /*
                         if ($('#MedBookAbs').length == 0)
                             $.ajax({
                                 url: "/menu",
-                                success: function (data) { $(data).appendTo('body'); },
+                                success: function (data) { 
+                                    $(data).appendTo('body');
+                                },
                                 dataType: 'html'
                             });
-                    */
                     event.preventDefault();
+                    /*
                     if($('.navigation-wrapper').hasClass('show-menu')) {
                             $('.navigation-wrapper').removeClass('show-menu');
                             $('.navigation').hide();
@@ -33,6 +35,7 @@ Meteor.startup(function() {
                             $('.navigation').fadeIn();
                             $('.navigation li').addClass('small-padding');
                     }
+                    */
                 }
 
         })

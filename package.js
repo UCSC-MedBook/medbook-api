@@ -1,21 +1,22 @@
 Package.describe({
   name: 'ucscmedbook:api',
-  summary: ' MedBook API ',
+  summary: 'Code shared by all MedBook Apps',
   version: '0.1.0',
-  git: 'https://github.com/ucsc-medbook/medbook-api.git'
+  git: 'https://github.com/UCSC-MedBook/medbook-api.git'
 });
 
 Package.onUse(function(api) {
-  api.use( 'templating', 'client');
-  api.use(['session', 'handlebars', 'stylus', 'accounts-base', 'underscore'], 'client');
-  api.use('http', ['client', 'server'])
-  api.addFiles('api.js', ['client', 'server']);
-  api.addFiles(['navigator.css', 'navigator.js', 'navigator.html'], 'client');
-  api.export(["MedBookPost", "ApiState", "MedBookNavigator"]);
-});
-
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('ucscmedbook:api');
-  api.addFiles('api-tests.js');
+  api.use('templating@1.0.0');
+  api.use('blaze@2.0.0');
+  api.use('aldeed:autoform@4.0.0');
+  api.addFiles([
+    'client/genelist/genelist.html',
+    'client/genelist/genelist.js',
+    'client/navigation/api-tests.js',
+    'client/navigation/api.js',
+    'client/navigation/navigator.css',
+    'client/navigation/navigator.html',
+    'client/navigation/navigator.js',
+  ], 'client');
+  api.export("MedBookNavigator", "client");
 });
