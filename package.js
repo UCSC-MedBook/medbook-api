@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ucscmedbook:api',
   summary: 'Code shared by all MedBook Apps',
-  version: '0.1.0',
+  version: '0.2.0',
   git: 'https://github.com/UCSC-MedBook/medbook-api.git'
 });
 
