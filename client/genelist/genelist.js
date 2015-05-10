@@ -2,8 +2,25 @@
 
 AutoForm.addInputType("genelist", {
   template: "genelist",
+  valueOut: function () {
+     debugger;
+     return;
+  },
   valueConverters: {
+    "object": function (val) {
+      debugger;
+      return val;
+    },
+    "Object": function (val) {
+      debugger;
+      return val;
+    },
+    "string": function (val) {
+      debugger;
+      return val;
+    },
     "stringArray": function (val) {
+      debugger;
       return val;
     },
   }
@@ -16,18 +33,49 @@ Template.genelist.helpers({
    },
 });
 
-Template.genelist.rendered = function () {
-     debugger;
-     var data = this.data;
-     var $genelist = this.find("input");
-     $genelist.select2({
+AutoForm.addHooks(null, {
+    formToDoc: function(doc)  {
+       debugger;
+       var raw = $(".genelist").select2("val");
+       doc.Mutated_Genes = raw;
+       return doc;
+    },
+    docToForm: function(doc)  {
+     var data = doc.Mutated_Genes;
+     $(".genelist").select2("data", data.map(function(e) {return { id: e, text: e}}));
+
+     /*
+     $('.genelist').select2({
           initSelection : function (element, callback) {
+            debugger
+            if (data)
+                callback( data.map(function(g) { return { id: g, text: g }}) );
+          }
+      });
+      */
+      return doc;
+    }
+});
+
+Template.genelist.rendered = function () {
+     var thisTemplate = this;;
+     thisTemplate.$genelist = $(this.find("input"));
+
+     var absUrl = Meteor.absoluteUrl();
+     var whichApp = absUrl.substring(absUrl.lastIndexOf("/", absUrl.length -2));
+     var url = whichApp + "genes";
+
+     debugger;
+     thisTemplate.$genelist.select2({
+          initSelection : function (element, callback) {
+            var data = Template.currentData().value;
+            debugger
             if (data)
                 callback( data.map(function(g) { return { id: g, text: g }}) );
           },
           multiple: true,
           ajax: {
-            url: "/fusion/genes",
+            url:  url,
             dataType: 'json',
             delay: 250,
             data: function (term) {
