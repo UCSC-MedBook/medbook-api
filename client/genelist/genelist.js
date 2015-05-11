@@ -24,34 +24,36 @@ Template.genelist.helpers({
    },
 });
 
+GeneList_formToDoc =  function(doc)  {
+   $(".genelist").each(function(i,element) {
+       var fieldName = $(element).attr("prop")
+       if (fieldName) {
+          var raw = $(element).select2("val");
+          doc[fieldName] = raw;
+       }
+   });
+
+   return doc;
+},
+
+GeneList_docToForm = function(doc)  {
+
+   $(".genelist").each(function(i,element) {
+       var fieldName = $(element).attr("prop")
+       if (fieldName) {
+          var data = doc[fieldName];
+          if (data == null)
+              $(element).select2("data", null);
+          else
+              $(element).select2("data", data.map(function(e) {return { id: e, text: e}}));
+       }
+   });
+  return doc;
+}
+
 AutoForm.addHooks("CRFquickForm", {
-    formToDoc: function(doc, ss)  {
-
-       $(".genelist").each(function(i,element) {
-           var fieldName = $(element).attr("prop")
-           if (fieldName) {
-              var raw = $(element).select2("val");
-              doc[fieldName] = raw;
-           }
-       });
-
-       return doc;
-    },
-
-    docToForm: function(doc, ss)  {
-
-       $(".genelist").each(function(i,element) {
-           var fieldName = $(element).attr("prop")
-           if (fieldName) {
-              var data = doc[fieldName];
-              if (data == null)
-                  $(element).select2("data", null);
-              else
-                  $(element).select2("data", data.map(function(e) {return { id: e, text: e}}));
-           }
-       });
-      return doc;
-    }
+  formToDoc: GeneList_formToDoc,
+  docToForm: GeneList_docToForm
 });
 
 Template.genelist.rendered = function () {
@@ -62,6 +64,7 @@ Template.genelist.rendered = function () {
      var absUrl = Meteor.absoluteUrl();
      var whichApp = absUrl.substring(absUrl.lastIndexOf("/", absUrl.length -2));
      var url = whichApp + "genes";
+
 
      thisTemplate.$genelist.select2({
           initSelection : function (element, callback) {
@@ -87,11 +90,10 @@ Template.genelist.rendered = function () {
           minimumInputLength: 2,
      });
 
-     /*
-     if (prev && prev.genelist) {
-         $genelist.select2("val", prev.genelist );
-     }
-     */
+     var value = Template.currentData().value;
+     if (value)
+         thisTemplate.$genelist.select2("val", value );
+
 };
 
 Template.genelist.destroyed = function () {

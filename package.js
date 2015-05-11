@@ -1,7 +1,7 @@
 Package.describe({
   name: 'ucscmedbook:api',
   summary: 'Code shared by all MedBook Apps',
-  version: '0.2.1',
+  version: '0.2.2',
   git: 'https://github.com/UCSC-MedBook/medbook-api.git'
 });
 
@@ -36,5 +36,5 @@ Package.onUse(function(api) {
     'client/navigation/navigator.html',
     'client/navigation/navigator.js',
   ], 'client');
-  api.export("MedBookNavigator", "client");
+  api.export(["MedBookNavigator", "genelist", "GeneList_docToForm", "GeneList_formToDoc"], "client");
 });
