@@ -1,11 +1,27 @@
 console.log("Before HTTP Methods");
 HTTP.methods({
 
-    genes: function(data){
-        console.log("IN HTTP Method genes");
+    genes: function(){
         var items = [];
         var seen = {}
         Expression.find( {gene: {$regex: "^"+ this.query.q + ".*" }}, { sort: {gene:1 }, fields: {"gene":1 }}).
+            forEach(function(f) {
+                if (!(f.gene in seen)) {
+                    items.push({id: f.gene, text: f.gene});
+                    seen[f.gene] = 1;
+                }
+            });
+        items = _.unique(items);
+        this.setContentType("application/javascript");
+        return JSON.stringify({
+            items:items
+        });
+    },
+    geneListPrecise: function(){
+	var genelist = this.query.q.split(/[, ;]/).filter(function(s) { return s && s.length > 1});
+        var items = [];
+        var seen = {}
+        Expression.find( {gene: {$in: genelist }}, { sort: {gene:1 }, fields: {"gene":1 }}).
             forEach(function(f) {
                 if (!(f.gene in seen)) {
                     items.push({id: f.gene, text: f.gene});
