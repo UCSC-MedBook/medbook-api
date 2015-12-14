@@ -1,7 +1,7 @@
 Package.describe({
-  name: 'ucscmedbook:api',
+  name: 'medbook:api',
   summary: 'Code shared by all MedBook Apps',
-  version: '0.2.2',
+  version: '0.2.4',
   git: 'https://github.com/UCSC-MedBook/medbook-api.git'
 });
 
@@ -11,7 +11,7 @@ Package.onUse(function(api) {
   // api.use('aldeed:autoform@4.0.0');
   // api.use('cfs:http-methods@0.0.27');
 
-  api.use(['natestrauser:select2', 'templating@1.0.0', 'blaze@2.0.0', 'aldeed:autoform@4.0.0', 'cfs:http-methods@0.0.27']);
+  api.use(['natestrauser:select2@4.0.0_1', 'templating@1.0.0', 'blaze@2.0.0', 'aldeed:autoform@4.0.0', 'cfs:http-methods@0.0.27']);
 
   api.addFiles([
     'server/genelist/genelist.js',
