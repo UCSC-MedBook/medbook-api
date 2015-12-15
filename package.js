@@ -1,7 +1,11 @@
 Package.describe({
   name: 'medbook:api',
   summary: 'Code shared by all MedBook Apps',
-  version: '0.2.4',
+  version: '0.2.5',
+  // version 0.2.5 is same as 0.2.4 except publish with:
+  // meteor publish --release METEOR@1.1.0.3
+  // This is to avoid problems with pseudo-package isobuild:isopack-2.
+  // 0.2.5 of this package is compatible with meteor pre-1.2.
   git: 'https://github.com/UCSC-MedBook/medbook-api.git'
 });
 
